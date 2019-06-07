@@ -24,14 +24,18 @@ searchForm.addEventListener('submit', e => {
     //Search reddit
     reddit.search(searchTerm, searchLimit, sortBy)
       .then(results => {
+        console.log(results);
         let output = '<div class="card-columns">';
         results.forEach(post => {
+          // Check for image
+          const image = post.preview ? post.preview.images[0].source.url : 'https://upcity.com/wp-content/uploads/2014/11/reddit-banner.png';
+
           output +=
           `<div class="card">
-  <img class="card-img-top" src="..." alt="Card image cap">
+  <img class="card-img-top" src="${image}" alt="Card image cap">
   <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    <h5 class="card-title">${post.title}</h5>
+    <p class="card-text"${truncateText(post.selftext, 100)}</p>
     <a href="#" class="btn btn-primary">Go somewhere</a>
   </div>
 </div>`;
@@ -67,4 +71,14 @@ function showMessage(message, className){
 
   // Timeout alert
   setTimeout(() => document.querySelector('.alert').remove(), 3000);
+}
+
+
+// Truncate text
+
+function truncateText(text, limit){
+  const shortened = text.indexOf('', limit);
+
+  if(shortened == -1) return text;
+  return text.substring(0, shortened);
 }
