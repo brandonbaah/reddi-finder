@@ -117,18 +117,82 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"index.js":[function(require,module,exports) {
+})({"reddit-api.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var _default = {
+  search: function search(searchTerm, searchLimit, sortBy) {
+    return fetch("http://www.reddit.com/search.json?q=".concat(searchTerm, "&sort=").concat(sortBy, "&limit=").concat(searchLimit)).then(function (res) {
+      return res.json();
+    }).then(function (data) {
+      return data.data.children.map(function (data) {
+        return data.data;
+      });
+    }).catch(function (err) {
+      return console.log(err);
+    });
+  }
+};
+exports.default = _default;
+},{}],"index.js":[function(require,module,exports) {
+"use strict";
+
+var _redditApi = _interopRequireDefault(require("./reddit-api"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 var searchForm = document.getElementById("search-form");
 var searchInput = document.getElementById("search-input");
 searchForm.addEventListener('submit', function (e) {
   // Get the search term
   var searchTerm = searchInput.value; // Get sort
 
-  var sortBy = document.querySelector('input[name="sortby"]:checked').value;
-  console.log(sortBy);
+  var sortBy = document.querySelector('input[name="sortby"]:checked').value; // Grab the limit
+
+  var searchLimit = document.getElementById('limit').value; // Check the searchInput
+
+  if (searchTerm === "") {
+    showMessage('Please add a search term', 'alert-danger');
+  } // Clear the input
+
+
+  searchInput.value = ''; //Search reddit
+
+  _redditApi.default.search(searchTerm, searchLimit, sortBy).then(function (results) {
+    var output = '<div class="card-columns">';
+    results.forEach(function (post) {
+      output += "<div class=\"card\">\n  <img class=\"card-img-top\" src=\"...\" alt=\"Card image cap\">\n  <div class=\"card-body\">\n    <h5 class=\"card-title\">Card title</h5>\n    <p class=\"card-text\">Some quick example text to build on the card title and make up the bulk of the card's content.</p>\n    <a href=\"#\" class=\"btn btn-primary\">Go somewhere</a>\n  </div>\n</div>";
+    });
+    output += '</div>';
+    document.getElementById('results').innerHTML = output;
+  });
+
   e.preventDefault();
-});
-},{}],"../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+}); // Show showMessage
+
+function showMessage(message, className) {
+  // Create div
+  var div = document.createElement('div'); // Add classes
+
+  div.className = "alert ".concat(className); // Add text
+
+  div.appendChild(document.createTextNode(message)); // Get the parent
+
+  var searchContainer = document.getElementById('search-container'); // Get search
+
+  var search = document.getElementById('search'); // Insert it before
+
+  searchContainer.insertBefore(div, search); // Timeout alert
+
+  setTimeout(function () {
+    return document.querySelector('.alert').remove();
+  }, 3000);
+}
+},{"./reddit-api":"reddit-api.js"}],"../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -156,7 +220,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57955" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59596" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
@@ -331,5 +395,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","index.js"], null)
+},{}]},{},["../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","index.js"], null)
 //# sourceMappingURL=/reddi-finder.e31bb0bc.js.map
