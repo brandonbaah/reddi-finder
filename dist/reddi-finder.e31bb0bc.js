@@ -168,7 +168,7 @@ searchForm.addEventListener('submit', function (e) {
     results.forEach(function (post) {
       // Check for image
       var image = post.preview ? post.preview.images[0].source.url : 'https://upcity.com/wp-content/uploads/2014/11/reddit-banner.png';
-      output += "<div class=\"card\">\n  <img class=\"card-img-top\" src=\"".concat(image, "\" alt=\"Card image cap\">\n  <div class=\"card-body\">\n    <h5 class=\"card-title\">").concat(post.title, "</h5>\n    <p class=\"card-text\"").concat(truncateText(post.selftext, 100), "</p>\n    <a href=\"#\" class=\"btn btn-primary\">Go somewhere</a>\n  </div>\n</div>");
+      output += "<div class=\"card\">\n  <img class=\"card-img-top\" src=\"".concat(image, "\" alt=\"Card image cap\">\n  <div class=\"card-body\">\n    <h5 class=\"card-title\">").concat(post.title, "</h5>\n    <p class=\"card-text\"").concat(truncateText(post.selftext, 100), "</p>\n    <a href=\"").concat(post.url, "\" target=\"_blank\" class=\"btn btn-primary\">Read More</a>\n    <hr>\n      <span class=\"badge badge-secondary\">Subreddit: ").concat(post.subreddit, "</span>\n      <span class=\"badge badge-dark\">Score: ").concat(post.score, "</span>\n\n  </div>\n</div>");
     });
     output += '</div>';
     document.getElementById('results').innerHTML = output;
