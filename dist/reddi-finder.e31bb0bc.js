@@ -141,7 +141,7 @@ exports.default = _default;
 },{}],"index.js":[function(require,module,exports) {
 "use strict";
 
-var _redditApi = _interopRequireDefault(require("./reddit-api"));
+var _redditApi = _interopRequireDefault(require("./reddit-api.js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -202,7 +202,7 @@ function truncateText(text, limit) {
   if (shortened == -1) return text;
   return text.substring(0, shortened);
 }
-},{"./reddit-api":"reddit-api.js"}],"../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./reddit-api.js":"reddit-api.js"}],"../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
